@@ -2,14 +2,19 @@
 	"i18n": true,
 	"type": "panel",
 	"items": {
-		"option1": {
-			"type": "checkbox",
-			"label": "option1",
+		"host": {
+			"type": "text",
+			"label": "Host",
 			"newLine": true
 		},
-		"option2": {
-			"type": "text",
-			"label": "option2",
+		"port": {
+			"type": "number",
+			"label": "Port",
+			"newLine": true
+		},
+		"interval": {
+			"type": "number",
+			"label": "Interval",
 			"newLine": true
 		}
 	}

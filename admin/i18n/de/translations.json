@@ -1,5 +1,6 @@
 {
-	"pichlerconnect adapter settings": "Adaptereinstellungen für pichlerconnect",
-	"option1": "Option 1",
-	"option2": "Option 2"
+    "pichlerconnect adapter settings": "Adaptereinstellungen für pichlerconnect",
+    "Host": "Gastgeber",
+    "Port": "Hafen",
+    "Interval": "Intervall in Sekunden"
 }

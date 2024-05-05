@@ -1,5 +1,6 @@
 {
-	"pichlerconnect adapter settings": "Paramètres d'adaptateur pour pichlerconnect",
-	"option1": "Option 1",
-	"option2": "Option 2"
+    "pichlerconnect adapter settings": "Paramètres de l'adaptateur pour pichlerconnect",
+    "Host": "Hôte",
+    "Port": "Port",
+    "Interval": "Intervalle en secondes"
 }

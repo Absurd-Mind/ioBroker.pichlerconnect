@@ -101,7 +101,7 @@ class Pichlerconnect extends utils.Adapter {
 		await this.fetchData();
 
 		this.scanIntervall = this.setInterval(
-			this.fetchData,
+			() => this.fetchData(),
 			(this.config.interval * 1000)
 		);
 	}

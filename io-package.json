@@ -59,7 +59,7 @@
         },
         "platform": "Javascript/Node.js",
         "main": "build/main.js",
-        "icon": "pichlerconnect.png",
+        "icon": "pichler.jpg",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/Absurd-Mind/ioBroker.pichlerconnect/main/admin/pichlerconnect.png",
         "readme": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect/blob/main/README.md",

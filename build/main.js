@@ -100,7 +100,7 @@ class Pichlerconnect extends utils.Adapter {
     this.log.debug(`starting adapter with config: ${JSON.stringify(this.config)}`);
     await this.fetchData();
     this.scanIntervall = this.setInterval(
-      this.fetchData,
+      () => this.fetchData(),
       this.config.interval * 1e3
     );
   }

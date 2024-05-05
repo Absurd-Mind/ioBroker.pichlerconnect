@@ -5,11 +5,17 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 import * as utils from "@iobroker/adapter-core";
+import axios from "axios";
+import cheerio, { CheerioAPI } from "cheerio";
+
 
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
 class Pichlerconnect extends utils.Adapter {
+
+	scanIntervall: ioBroker.Interval | undefined = undefined;
+
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
@@ -26,57 +32,110 @@ class Pichlerconnect extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
-		// Initialize your adapter here
 
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
-		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
-
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-		await this.setObjectNotExistsAsync("testVariable", {
+		await this.setObjectNotExistsAsync("ph", {
 			type: "state",
 			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
+				name: "PH",
+				type: "number",
+				role: "value",
 				read: true,
-				write: true,
+				write: false,
 			},
 			native: {},
 		});
 
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("testVariable");
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates("lights.*");
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates("*");
+		await this.setObjectNotExistsAsync("redox", {
+			type: "state",
+			common: {
+				name: "Redox",
+				type: "number",
+				role: "value",
+				read: true,
+				write: false,
+				unit: "mV"
+			},
+			native: {},
+		});
 
-		/*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
+		await this.setObjectNotExistsAsync("flow", {
+			type: "state",
+			common: {
+				name: "Flow active",
+				type: "boolean",
+				role: "indicator",
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
 
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
+		await this.setObjectNotExistsAsync("level_ph", {
+			type: "state",
+			common: {
+				name: "level ph",
+				type: "number",
+				role: "value",
+				read: true,
+				write: false,
+				unit: "%"
+			},
+			native: {},
+		});
 
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+		await this.setObjectNotExistsAsync("level_redox", {
+			type: "state",
+			common: {
+				name: "level redox",
+				type: "number",
+				role: "value",
+				read: true,
+				write: false,
+				unit: "%"
+			},
+			native: {},
+		});
 
-		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + result);
+		this.log.debug(`starting adapter with config: ${JSON.stringify(this.config)}`);
 
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
+		await this.fetchData();
+
+		this.scanIntervall = this.setInterval(
+			this.fetchData,
+			(this.config.interval * 1000)
+		);
+	}
+
+	private async fetchData(): Promise<void>  {
+		this.log.debug("fetching data");
+		const $ = await this.getHtml(this.config.host, this.config.port);
+		if ($) {
+			this.log.debug("parsing data");
+
+			await this.setStateAsync("ph", parseFloat($("table").eq(9).find("td").eq(4).find("b").text().trim()), true);
+			await this.setStateAsync("redox", parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()), true);
+			await this.setStateAsync("flow", $("table").eq(13).find("td").eq(4).find("b").text().trim() == "An", true);
+
+			await this.setStateAsync("level_ph", parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()), true);
+			await this.setStateAsync("level_redox", parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()), true);
+		}
+	}
+
+	private async getHtml(host: string, port: number): Promise<CheerioAPI | null> {
+		const url = `http://${host}:${port}/commandPage?COMMAND=values`;
+		try {
+			const response = await axios.get(url);
+			
+			if (response.status === 200) {
+				const html = response.data;
+				return cheerio.load(html);
+			} else {
+				throw new Error(`HTTP Request failed with status code ${response.status}`);
+			}
+		} catch (error) {
+			console.error('Error fetching or parsing HTML:', error);
+			return null;
+		}
 	}
 
 	/**
@@ -84,11 +143,7 @@ class Pichlerconnect extends utils.Adapter {
 	 */
 	private onUnload(callback: () => void): void {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
-			// clearInterval(interval1);
+			this.clearInterval(this.scanIntervall);
 
 			callback();
 		} catch (e) {

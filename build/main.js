@@ -22,7 +22,10 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
+var import_axios = __toESM(require("axios"));
+var import_cheerio = __toESM(require("cheerio"));
 class Pichlerconnect extends utils.Adapter {
+  scanIntervall = void 0;
   constructor(options = {}) {
     super({
       ...options,
@@ -36,33 +39,104 @@ class Pichlerconnect extends utils.Adapter {
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.log.info("config option1: " + this.config.option1);
-    this.log.info("config option2: " + this.config.option2);
-    await this.setObjectNotExistsAsync("testVariable", {
+    await this.setObjectNotExistsAsync("ph", {
       type: "state",
       common: {
-        name: "testVariable",
-        type: "boolean",
-        role: "indicator",
+        name: "PH",
+        type: "number",
+        role: "value",
         read: true,
-        write: true
+        write: false
       },
       native: {}
     });
-    this.subscribeStates("testVariable");
-    await this.setStateAsync("testVariable", true);
-    await this.setStateAsync("testVariable", { val: true, ack: true });
-    await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
-    let result = await this.checkPasswordAsync("admin", "iobroker");
-    this.log.info("check user admin pw iobroker: " + result);
-    result = await this.checkGroupAsync("admin", "admin");
-    this.log.info("check group user admin group admin: " + result);
+    await this.setObjectNotExistsAsync("redox", {
+      type: "state",
+      common: {
+        name: "Redox",
+        type: "number",
+        role: "value",
+        read: true,
+        write: false,
+        unit: "mV"
+      },
+      native: {}
+    });
+    await this.setObjectNotExistsAsync("flow", {
+      type: "state",
+      common: {
+        name: "Flow active",
+        type: "boolean",
+        role: "indicator",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setObjectNotExistsAsync("level_ph", {
+      type: "state",
+      common: {
+        name: "level ph",
+        type: "number",
+        role: "value",
+        read: true,
+        write: false,
+        unit: "%"
+      },
+      native: {}
+    });
+    await this.setObjectNotExistsAsync("level_redox", {
+      type: "state",
+      common: {
+        name: "level redox",
+        type: "number",
+        role: "value",
+        read: true,
+        write: false,
+        unit: "%"
+      },
+      native: {}
+    });
+    this.log.debug(`starting adapter with config: ${JSON.stringify(this.config)}`);
+    await this.fetchData();
+    this.scanIntervall = this.setInterval(
+      this.fetchData,
+      this.config.interval * 1e3
+    );
+  }
+  async fetchData() {
+    this.log.debug("fetching data");
+    const $ = await this.getHtml(this.config.host, this.config.port);
+    if ($) {
+      this.log.debug("parsing data");
+      await this.setStateAsync("ph", parseFloat($("table").eq(9).find("td").eq(4).find("b").text().trim()), true);
+      await this.setStateAsync("redox", parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()), true);
+      await this.setStateAsync("flow", $("table").eq(13).find("td").eq(4).find("b").text().trim() == "An", true);
+      await this.setStateAsync("level_ph", parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()), true);
+      await this.setStateAsync("level_redox", parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()), true);
+    }
+  }
+  async getHtml(host, port) {
+    const url = `http://${host}:${port}/commandPage?COMMAND=values`;
+    try {
+      const response = await import_axios.default.get(url);
+      if (response.status === 200) {
+        const html = response.data;
+        return import_cheerio.default.load(html);
+      } else {
+        throw new Error(`HTTP Request failed with status code ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error fetching or parsing HTML:", error);
+      return null;
+    }
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
    */
   onUnload(callback) {
     try {
+      this.clearInterval(this.scanIntervall);
       callback();
     } catch (e) {
       callback();

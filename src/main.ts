@@ -8,12 +8,10 @@ import * as utils from "@iobroker/adapter-core";
 import axios from "axios";
 import cheerio, { CheerioAPI } from "cheerio";
 
-
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
 class Pichlerconnect extends utils.Adapter {
-
 	scanIntervall: ioBroker.Interval | undefined = undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -32,7 +30,6 @@ class Pichlerconnect extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
-
 		await this.setObjectNotExistsAsync("ph", {
 			type: "state",
 			common: {
@@ -53,7 +50,7 @@ class Pichlerconnect extends utils.Adapter {
 				role: "value",
 				read: true,
 				write: false,
-				unit: "mV"
+				unit: "mV",
 			},
 			native: {},
 		});
@@ -78,7 +75,7 @@ class Pichlerconnect extends utils.Adapter {
 				role: "value",
 				read: true,
 				write: false,
-				unit: "%"
+				unit: "%",
 			},
 			native: {},
 		});
@@ -91,7 +88,7 @@ class Pichlerconnect extends utils.Adapter {
 				role: "value",
 				read: true,
 				write: false,
-				unit: "%"
+				unit: "%",
 			},
 			native: {},
 		});
@@ -100,24 +97,33 @@ class Pichlerconnect extends utils.Adapter {
 
 		await this.fetchData();
 
-		this.scanIntervall = this.setInterval(
-			() => this.fetchData(),
-			(this.config.interval * 1000)
-		);
+		this.scanIntervall = this.setInterval(() => this.fetchData(), this.config.interval * 1000);
 	}
 
-	private async fetchData(): Promise<void>  {
+	private async fetchData(): Promise<void> {
 		this.log.debug("fetching data");
 		const $ = await this.getHtml(this.config.host, this.config.port);
 		if ($) {
 			this.log.debug("parsing data");
 
 			await this.setStateAsync("ph", parseFloat($("table").eq(9).find("td").eq(4).find("b").text().trim()), true);
-			await this.setStateAsync("redox", parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()), true);
+			await this.setStateAsync(
+				"redox",
+				parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()),
+				true,
+			);
 			await this.setStateAsync("flow", $("table").eq(13).find("td").eq(4).find("b").text().trim() == "An", true);
 
-			await this.setStateAsync("level_ph", parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()), true);
-			await this.setStateAsync("level_redox", parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()), true);
+			await this.setStateAsync(
+				"level_ph",
+				parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()),
+				true,
+			);
+			await this.setStateAsync(
+				"level_redox",
+				parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()),
+				true,
+			);
 		}
 	}
 
@@ -125,7 +131,7 @@ class Pichlerconnect extends utils.Adapter {
 		const url = `http://${host}:${port}/commandPage?COMMAND=values`;
 		try {
 			const response = await axios.get(url);
-			
+
 			if (response.status === 200) {
 				const html = response.data;
 				return cheerio.load(html);

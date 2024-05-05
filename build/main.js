@@ -99,10 +99,7 @@ class Pichlerconnect extends utils.Adapter {
     });
     this.log.debug(`starting adapter with config: ${JSON.stringify(this.config)}`);
     await this.fetchData();
-    this.scanIntervall = this.setInterval(
-      () => this.fetchData(),
-      this.config.interval * 1e3
-    );
+    this.scanIntervall = this.setInterval(() => this.fetchData(), this.config.interval * 1e3);
   }
   async fetchData() {
     this.log.debug("fetching data");
@@ -110,10 +107,22 @@ class Pichlerconnect extends utils.Adapter {
     if ($) {
       this.log.debug("parsing data");
       await this.setStateAsync("ph", parseFloat($("table").eq(9).find("td").eq(4).find("b").text().trim()), true);
-      await this.setStateAsync("redox", parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()), true);
+      await this.setStateAsync(
+        "redox",
+        parseInt($("table").eq(11).find("td").eq(4).find("b").text().trim()),
+        true
+      );
       await this.setStateAsync("flow", $("table").eq(13).find("td").eq(4).find("b").text().trim() == "An", true);
-      await this.setStateAsync("level_ph", parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()), true);
-      await this.setStateAsync("level_redox", parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()), true);
+      await this.setStateAsync(
+        "level_ph",
+        parseFloat($("table").eq(19).find("td").eq(4).find("b").text().trim()),
+        true
+      );
+      await this.setStateAsync(
+        "level_redox",
+        parseFloat($("table").eq(21).find("td").eq(4).find("b").text().trim()),
+        true
+      );
     }
   }
   async getHtml(host, port) {

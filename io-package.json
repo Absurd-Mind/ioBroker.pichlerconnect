@@ -74,24 +74,6 @@
             "config": "json",
             "tab": "materialize"
         },
-        "adminTab": {
-            "singleton": true,
-            "name": {
-                "en": "Pichler Connect",
-                "de": "Pichler Connect",
-                "ru": "Пихлер Коннект",
-                "pt": "Conexão Pichler",
-                "nl": "Pichler Connect",
-                "fr": "Pichler Connecter",
-                "it": "Pichler Connect",
-                "es": "Conexión Pichler",
-                "pl": "Połączenie Pichlera",
-                "uk": "Pichler Connect",
-                "zh-cn": "皮克勒连接"
-            },
-            "link": "",
-            "fa-icon": "info"
-        },
         "supportCustoms": true,
         "dependencies": [
             {

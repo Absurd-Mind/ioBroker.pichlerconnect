@@ -130,12 +130,12 @@ class Pichlerconnect extends utils.Adapter {
 				const html = response.data;
 				return cheerio.load(html);
 			} else {
-				throw new Error(`HTTP Request failed with status code ${response.status}`);
+				this.log.error(`HTTP Request failed with status code ${response.status}`);
 			}
 		} catch (error) {
-			console.error('Error fetching or parsing HTML:', error);
-			return null;
+			this.log.error(`Error fetching or parsing HTML: ${error}`);
 		}
+		return null;
 	}
 
 	/**

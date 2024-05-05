@@ -7,7 +7,7 @@
 	"keywords": ["pichler", "ph", "spa"],
 	"expert": "yes",
 	"features": ["adapter"],
-	"adminFeatures": ["tab", "custom"],
+	"adminFeatures": ["custom"],
 	"type": "misc-data",
 	"startMode": "daemon",
 	"connectionType": "local",

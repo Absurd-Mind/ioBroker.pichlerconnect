@@ -1,9 +1,9 @@
 {
 	"cli": true,
 	"target": "directory",
-	"adapterName": "pichlerconnect",
-	"title": "Pichler Connect",
-	"description": "Pichler connect short description",
+	"adapterName": "pichler",
+	"title": "Pichler",
+	"description": "Pichler short description",
 	"keywords": ["pichler", "ph", "spa"],
 	"expert": "yes",
 	"features": ["adapter"],

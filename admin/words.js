@@ -4,18 +4,18 @@
 "use strict";
 
 systemDictionary = {
-	"pichlerconnect adapter settings": {
-		en: "Adapter settings for pichlerconnect",
-		de: "Adaptereinstellungen für pichlerconnect",
-		ru: "Настройки адаптера для pichlerconnect",
-		pt: "Configurações do adaptador para pichlerconnect",
-		nl: "Adapterinstellingen voor pichlerconnect",
-		fr: "Paramètres d'adaptateur pour pichlerconnect",
-		it: "Impostazioni dell'adattatore per pichlerconnect",
-		es: "Ajustes del adaptador para pichlerconnect",
-		pl: "Ustawienia adaptera dla pichlerconnect",
-		uk: "Налаштування адаптера для pichlerconnect",
-		"zh-cn": "pichlerconnect的适配器设置",
+	"pichler adapter settings": {
+		en: "Adapter settings for pichler",
+		de: "Adaptereinstellungen für pichler",
+		ru: "Настройки адаптера для pichler",
+		pt: "Configurações do adaptador para pichler",
+		nl: "Adapterinstellingen voor pichler",
+		fr: "Paramètres d'adaptateur pour pichler",
+		it: "Impostazioni dell'adattatore per pichler",
+		es: "Ajustes del adaptador para pichler",
+		pl: "Ustawienia adaptera dla pichler",
+		uk: "Налаштування адаптера для pichler",
+		"zh-cn": "pichler的适配器设置",
 	},
 	option1: {
 		en: "option1",

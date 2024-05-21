@@ -24,12 +24,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_axios = __toESM(require("axios"));
 var import_cheerio = __toESM(require("cheerio"));
-class Pichlerconnect extends utils.Adapter {
+class Pichler extends utils.Adapter {
   scanIntervall = void 0;
   constructor(options = {}) {
     super({
       ...options,
-      name: "pichlerconnect"
+      name: "pichler"
     });
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
@@ -192,8 +192,8 @@ class Pichlerconnect extends utils.Adapter {
   // }
 }
 if (require.main !== module) {
-  module.exports = (options) => new Pichlerconnect(options);
+  module.exports = (options) => new Pichler(options);
 } else {
-  (() => new Pichlerconnect())();
+  (() => new Pichler())();
 }
 //# sourceMappingURL=main.js.map

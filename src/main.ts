@@ -11,13 +11,13 @@ import cheerio, { CheerioAPI } from "cheerio";
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
-class Pichlerconnect extends utils.Adapter {
+class Pichler extends utils.Adapter {
 	scanIntervall: ioBroker.Interval | undefined = undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
-			name: "pichlerconnect",
+			name: "pichler",
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
@@ -205,8 +205,8 @@ class Pichlerconnect extends utils.Adapter {
 
 if (require.main !== module) {
 	// Export the constructor in compact mode
-	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new Pichlerconnect(options);
+	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new Pichler(options);
 } else {
 	// otherwise start the instance directly
-	(() => new Pichlerconnect())();
+	(() => new Pichler())();
 }

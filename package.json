@@ -1,12 +1,12 @@
 {
-  "name": "iobroker.pichlerconnect",
+  "name": "iobroker.pichler",
   "version": "0.1.0",
   "description": "ioBroker adapter to read and control a Dosieranlage from Pichler Kunststofftechnik ",
   "author": {
     "name": "AbsurdMind",
     "email": "peter@myref.net"
   },
-  "homepage": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect",
+  "homepage": "https://github.com/Absurd-Mind/ioBroker.pichler",
   "license": "MIT",
   "keywords": [
     "pichler",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect.git"
+    "url": "https://github.com/Absurd-Mind/ioBroker.pichler.git"
   },
   "engines": {
     "node": ">= 18"
@@ -88,7 +88,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect/issues"
+    "url": "https://github.com/Absurd-Mind/ioBroker.pichler/issues"
   },
   "readmeFilename": "README.md"
 }

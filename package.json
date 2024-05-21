@@ -1,7 +1,7 @@
 {
   "name": "iobroker.pichlerconnect",
   "version": "0.1.0",
-  "description": "Pichler connect short description",
+  "description": "ioBroker adapter to read and control a Dosieranlage from Pichler Kunststofftechnik ",
   "author": {
     "name": "AbsurdMind",
     "email": "peter@myref.net"
@@ -11,7 +11,11 @@
   "keywords": [
     "pichler",
     "ph",
-    "spa"
+    "spa",
+    "smarthome",
+    "pool",
+    "whirlpool",
+    "dosieranlage"
   ],
   "repository": {
     "type": "git",

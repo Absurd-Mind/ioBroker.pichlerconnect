@@ -1,105 +1,102 @@
 {
-  "common": {
-    "name": "pichlerconnect",
-    "version": "0.1.0",
-    "news": {
-      "0.1.0": {
-        "en": "initial release",
-        "de": "erstausstrahlung",
-        "ru": "первоначальный выпуск",
-        "pt": "lançamento inicial",
-        "nl": "eerste release",
-        "fr": "libération initiale",
-        "it": "rilascio iniziale",
-        "es": "liberación inicial",
-        "pl": "początkowe zwolnienie",
-        "uk": "початковий реліз",
-        "zh-cn": "初步释放"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "uk": "Початкова версія",
-        "zh-cn": "首次出版"
-      }
-    },
-    "title": "Pichler Connect",
-    "titleLang": {
-      "en": "Pichler Connect",
-      "de": "Pichler Connect",
-      "ru": "Пихлер Коннект",
-      "pt": "Conexão Pichler",
-      "nl": "Pichler Connect",
-      "fr": "Pichler Connecter",
-      "it": "Pichler Connect",
-      "es": "Conexión Pichler",
-      "pl": "Połączenie Pichlera",
-      "uk": "Pichler Connect",
-      "zh-cn": "皮克勒连接"
-    },
-    "desc": {
-      "en": "Pichler connect short description",
-      "de": "Pichler connect Kurzbeschreibung",
-      "ru": "Краткое описание соединения Пихлера",
-      "pt": "Breve descrição da conexão Pichler",
-      "nl": "Pichler connect korte beschrijving",
-      "fr": "Brève description de Pichler Connect",
-      "it": "Pichler collega una breve descrizione",
-      "es": "Pichler conecta una breve descripción",
-      "pl": "Krótki opis połączenia Pichlera",
-      "uk": "Pichler Connect короткий опис",
-      "zh-cn": "Pichler 连接简短说明"
-    },
-    "authors": [
-      "AbsurdMind <peter@myref.net>"
-    ],
-    "keywords": [
-      "pichler",
-      "ph",
-      "spa"
-    ],
-    "license": "MIT",
-    "platform": "Javascript/Node.js",
-    "main": "build/main.js",
-    "icon": "pichler.jpg",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/Absurd-Mind/ioBroker.pichlerconnect/main/admin/pichlerconnect.png",
-    "readme": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect/blob/main/README.md",
-    "loglevel": "info",
-    "tier": 3,
-    "mode": "daemon",
-    "type": "misc-data",
-    "compact": true,
-    "connectionType": "local",
-    "dataSource": "poll",
-    "adminUI": {
-      "config": "json",
-      "tab": "materialize"
-    },
-    "supportCustoms": true,
-    "dependencies": [
-      {
-        "js-controller": ">=3.3.22"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=5.1.13"
-      }
-    ]
-  },
-  "native": {
-    "host": "localhost",
-    "port": 80,
-    "interval": "60"
-  },
-  "objects": [],
-  "instanceObjects": []
+	"common": {
+		"name": "pichlerconnect",
+		"version": "0.1.0",
+		"news": {
+			"0.1.0": {
+				"en": "initial release",
+				"de": "erstausstrahlung",
+				"ru": "первоначальный выпуск",
+				"pt": "lançamento inicial",
+				"nl": "eerste release",
+				"fr": "libération initiale",
+				"it": "rilascio iniziale",
+				"es": "liberación inicial",
+				"pl": "początkowe zwolnienie",
+				"uk": "початковий реліз",
+				"zh-cn": "初步释放"
+			},
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"uk": "Початкова версія",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Pichler",
+		"titleLang": {
+			"en": "Pichler Connect",
+			"de": "Pichler Connect",
+			"ru": "Пихлер Коннект",
+			"pt": "Conexão Pichler",
+			"nl": "Pichler Connect",
+			"fr": "Pichler Connecter",
+			"it": "Pichler Connect",
+			"es": "Conexión Pichler",
+			"pl": "Połączenie Pichlera",
+			"uk": "Pichler Connect",
+			"zh-cn": "皮克勒连接"
+		},
+		"desc": {
+			"en": "Pichler connect short description",
+			"de": "Pichler connect Kurzbeschreibung",
+			"ru": "Краткое описание соединения Пихлера",
+			"pt": "Breve descrição da conexão Pichler",
+			"nl": "Pichler connect korte beschrijving",
+			"fr": "Brève description de Pichler Connect",
+			"it": "Pichler collega una breve descrizione",
+			"es": "Pichler conecta una breve descripción",
+			"pl": "Krótki opis połączenia Pichlera",
+			"uk": "Pichler Connect короткий опис",
+			"zh-cn": "Pichler 连接简短说明"
+		},
+		"authors": ["AbsurdMind <peter@myref.net>"],
+		"keywords": ["pichler", "ph", "spa", "smarthome", "pool", "whirlpool", "dosieranlage"],
+		"licenseInformation": {
+			"license": "MIT",
+			"type": "free"
+		},
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "pichler.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Absurd-Mind/ioBroker.pichlerconnect/main/admin/pichlerconnect.png",
+		"readme": "https://github.com/Absurd-Mind/ioBroker.pichlerconnect/blob/main/README.md",
+		"loglevel": "info",
+		"tier": 3,
+		"mode": "daemon",
+		"type": "household",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json",
+			"tab": "materialize"
+		},
+		"supportCustoms": true,
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"host": "localhost",
+		"port": 80,
+		"interval": "60"
+	},
+	"objects": [],
+	"instanceObjects": []
 }
